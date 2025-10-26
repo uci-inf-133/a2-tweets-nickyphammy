@@ -101,6 +101,26 @@ function parseTweets(runkeeper_tweets) {
 		writtenPctElements[i].innerText = writtenPct + '%';
 	}
 
+	// Update first and last dates
+	if (tweet_array.length > 0) {
+		const firstDate = tweet_array[tweet_array.length - 1].time;
+		const lastDate = tweet_array[0].time;
+
+		document.getElementById('firstDate').innerText = firstDate.toLocaleDateString('en-US', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		});
+
+		document.getElementById('lastDate').innerText = lastDate.toLocaleDateString('en-US', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		});
+	}
+
 }
 
 //Wait for the DOM to load
