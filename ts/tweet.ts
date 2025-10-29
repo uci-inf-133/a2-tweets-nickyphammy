@@ -93,26 +93,19 @@ class Tweet {
     getHTMLTableRow(rowNumber:number):string {
         //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
         const urlMatch = this.text.match(/https?:\/\/\S+/);
-        const url = urlMatch ? urlMatch[0] : '#';
-        const dateStr = this.time.toLocaleString();
-        if (this.source === 'completed_event') {
-            const activityStr = this.activityType !== 'unknown' ? this.activityType : 'activity';
-            const distanceStr = this.distance > 0 ? this.distance.toFixed(2) + ' km' : 'N/A';
-            const writtenStr = this.written ? this.writtenText : '';
-            return `<tr>
-                <td>${rowNumber}</td>
-                <td>${activityStr}</td>
-                <td>${distanceStr}</td>
-                <td>${writtenStr}</td>
-                <td>${dateStr}</td>
-                <td><a href="${url}" target="_blank">View Activity</a></td>
-            </tr>`;
-        } else {
-            return `<tr>
-                <td>${rowNumber}</td>
-                <td colspan="4">${this.text}</td>
-                <td>${dateStr}</td>
-            </tr>`;
+        const activityStr = this.activityType !== 'unknown' ? this.activityType : 'activity';
+
+        // Parse the tweet text and make links clickable
+        let tweetHtml = this.text;
+        if (urlMatch) {
+            // Replace URLs with clickable links
+            tweetHtml = this.text.replace(/(https?:\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
         }
+
+        return `<tr>
+            <td>${rowNumber}</td>
+            <td>${activityStr}</td>
+            <td>${tweetHtml}</td>
+        </tr>`;
     }
 }
