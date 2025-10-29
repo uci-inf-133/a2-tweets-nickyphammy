@@ -82,8 +82,8 @@ class Tweet {
         if (match && match[1]) {
             const distance = parseFloat(match[1]);
             const unit = match[2].toLowerCase();
-            if (unit === 'mi') {
-                return distance * 1.60934;
+            if (unit === 'km') {
+                return distance / 1.609;
             }
             return distance;
         }
